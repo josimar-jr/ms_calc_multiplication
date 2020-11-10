@@ -8,7 +8,7 @@ import org.slf4j.event.*
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.gson.*
-import org.josimarjr.msmulti.Healthcheck.HealthcheckService
+import org.josimarjr.msmulti.healthcheck.HealthcheckService
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
