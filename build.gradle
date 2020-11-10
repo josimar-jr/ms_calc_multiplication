@@ -17,7 +17,7 @@ apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: 'application'
 
 group 'org.josimarjr.msmulti'
-version '0.0.1'
+version '0.1.0'
 mainClassName = "io.ktor.server.netty.EngineMain"
 
 sourceSets {
