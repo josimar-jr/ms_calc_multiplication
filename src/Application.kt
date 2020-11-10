@@ -8,7 +8,7 @@ import org.slf4j.event.*
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.gson.*
-import org.josimarjr.msmulti.healthcheck.healthcheckService
+import org.josimarjr.msmulti.healthcheck.healthcheckController
 import org.josimarjr.msmulti.multiplication.multiplicationController
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -32,15 +32,11 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
         get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
-
-        get("/json/gson") {
-            call.respond(mapOf("hello" to "world"))
+            call.respond(healthcheckController())
         }
 
         get("/healthcheck") {
-            call.respond(healthcheckService())
+            call.respond(healthcheckController())
         }
 
         get("/multiply/{factor1}/{factor2}") {

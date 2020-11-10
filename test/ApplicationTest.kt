@@ -1,5 +1,6 @@
 package org.josimarjr.msmulti
 
+import com.google.gson.Gson
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
@@ -17,16 +18,11 @@ class ApplicationTest {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Get, "/").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
-                assertEquals("HELLO WORLD!", response.content)
-            }
-        }
-    }
-
-    fun testGson() {
-        withTestApplication({ module(testing = true) }) {
-            handleRequest(HttpMethod.Get, "/").apply {
-                assertEquals(HttpStatusCode.OK, response.status())
-                assertEquals("HELLO WORLD!", response.content)
+                val responseType = assertNotNull(response.headers[HttpHeaders.ContentType])
+                assertEquals(ContentType.Application.Json.withCharset(Charsets.UTF_8), ContentType.parse(responseType))
+                val map: Map<String, Any> = HashMap()
+                val body = Gson().fromJson(response.content, map.javaClass)
+                assertEquals("ok", body["status"].toString())
             }
         }
     }
