@@ -8,7 +8,8 @@ import org.slf4j.event.*
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.gson.*
-import org.josimarjr.msmulti.healthcheck.HealthcheckService
+import org.josimarjr.msmulti.healthcheck.healthcheckService
+import org.josimarjr.msmulti.multiplication.multiplicationController
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -39,7 +40,15 @@ fun Application.module(testing: Boolean = false) {
         }
 
         get("/healthcheck") {
-            call.respond(HealthcheckService())
+            call.respond(healthcheckService())
+        }
+
+        get("/multiply/{factor1}/{factor2}") {
+            val factor1: Double = call.parameters["factor1"]!!.toDouble()
+            val factor2: Double = call.parameters["factor2"]!!.toDouble()
+            print(factor1)
+            print(factor2)
+            call.respond(multiplicationController(factor1, factor2))
         }
     }
 }
